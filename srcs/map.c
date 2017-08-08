@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 21:11:45 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/07/31 18:20:18 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/07 19:09:07 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int		map_width(char *line)
 	while (*split)
 	{
 		width++;
-		free(*split);
+		REF_DEC(*split);
 		split++;
 	}
+	REF_DEC(split);
 	return (width);
 }
 
@@ -44,7 +45,7 @@ int		*parse_row(char *line)
 	while (*split)
 	{
 		*pos++ = ft_atoi(*split);
-		free(*split);
+		REF_DEC(*split);
 		split++;
 	}
 //	free(split);
@@ -64,29 +65,33 @@ void	extend_map(int ***map, int *row, int len)
 		pos++;
 	}
 	new[pos] = row;
-	free(*map);
+	REF_DEC(*map);
 	*map = new;
 }
 
-t_map	*load_map(int fd)
+t_map	*load_map(char *file)
 {
 	char	*line;
 	t_map	*map;
+	int		fd;
 
 	NULL_GUARD((map = (t_map*)ft_memalloc(sizeof(t_map))));
 	map->map = (int***)ft_memalloc(sizeof(int**));
 	map->height = 0;
 	map->width = -1;
+	fd = open(file, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (map->width == -1)
 			map->width = map_width(line);
 		extend_map(map->map, parse_row(line), map->height++);
-		free(line);
+		REF_DEC(line);
 	}
-	map->offset_x = map->width / 2 - 1;
-	map->offset_y = map->height / 2 - 1;
+	close(fd);
+	map->offset_x = 0;
+	map->offset_y = 0;
 	map->tile_width = TILE_WIDTH;
 	map->tile_height = TILE_HEIGHT;
+	map->scale = 1;
 	return (map);
 }

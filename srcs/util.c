@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/23 15:20:57 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/07/31 14:56:33 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/07 14:49:08 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,7 @@ int			arr_len(char **arr)
 	return (len);
 }
 
-void		push_segment(t_segment **segs, t_segment *new)
+t_tuple		*offset_point(t_tuple *p, t_tuple *offset)
 {
-	new->next = *segs;
-	*segs = new;
-}
-
-t_segment	*new_segment(t_tuple *start, t_tuple *end, int color)
-{
-	t_segment	*new;
-
-	NULL_GUARD((new = ft_memalloc(sizeof(t_segment))));
-	new->start = start;
-	new->end = end;
-	new->color = color;
-	return (new);
+	return (new_tuple(p->x + offset->x, p->y + offset->y));
 }

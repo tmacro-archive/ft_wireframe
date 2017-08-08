@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 16:50:43 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/07/07 13:10:58 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/07 11:34:54 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	buf_copy(char **dest, char *src, size_t len)
 
 	if (!**dest)
 	{
-		free(*dest);
+		ft_memdel((void**)dest);
 		*dest = ft_strncpy(ft_strnew(len), src, len);
 	}
 	else

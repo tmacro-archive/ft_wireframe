@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memdel.c                                        :+:      :+:    :+:   */
+/*   log.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/05 09:55:31 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/04 11:58:22 by tmckinno         ###   ########.fr       */
+/*   Created: 2017/08/05 13:26:35 by tmckinno          #+#    #+#             */
+/*   Updated: 2017/08/05 13:29:52 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "clct.h"
+#include <stdio.h>
 
-void	ft_memdel(void **ap)
+int	region_log(t_region **region)
 {
-	memfree(ap);
+	printf(":: region %p\n  size: %lu\n  ref_count: %i\n", (*region)->address, (*region)->size, (*region)->ref_count);
+	return (1);
 }
