@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 21:11:45 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/13 14:16:43 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 14:35:19 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		*parse_row(char *line)
 	return (row);
 }
 
-int	extend_map(int ***map, int *row, int len)
+int		extend_map(int ***map, int *row, int len)
 {
 	int	**new;
 	int	pos;
@@ -97,7 +97,6 @@ t_map	*load_map(char *file)
 	}
 	close(fd);
 	map->offset_x = 0;
-	map->offset_y = 0;
 	map->offset_y = 0;
 	map->tile_width = TILE_WIDTH;
 	map->tile_height = TILE_HEIGHT;
