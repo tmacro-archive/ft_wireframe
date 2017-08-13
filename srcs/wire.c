@@ -6,12 +6,11 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 10:10:49 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 14:17:53 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:09:44 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 t_segment	*new_segment(t_tuple *start, t_tuple *end, int color)
 {
@@ -21,8 +20,6 @@ t_segment	*new_segment(t_tuple *start, t_tuple *end, int color)
 	new->start = start;
 	new->end = end;
 	new->color = color;
-	REF_INC(start);
-	REF_INC(end);
 	return (new);
 }
 
@@ -54,7 +51,6 @@ void		push_segment(t_segment **segs, t_segment *new)
 {
 	new->next = *segs;
 	*segs = new;
-	REF_INC(new);
 }
 
 t_segment	*build_segments(t_map *map)

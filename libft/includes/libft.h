@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 09:13:53 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 11:32:31 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:20:12 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 
 # define NULL_GUARD(val)  if (val == NULL) return NULL
 # define NULL_GUARD_NR(val) if (val == NULL) return
-# define NULL_GUARD_FR(val, mem) if (val == NULL) {ft_memdel((void**)&mem); return (ret);}
 # define ERR_CHECK(val, err) if (val == err) return NULL
 # define ERR_CNR(val, err, ret) if (val == err) return (ret)
-# define ERR_CNRF(val, err, ret, mem) if (val == err) {ft_memdel((void**)&mem); return (ret);}
+# define ERR_CNRF(v, e, r, m) if (v == e) {ft_memdel((void**)&m); return (r);}
 # define BREAK(val, err) if (val == err) break
 
 typedef struct		s_list

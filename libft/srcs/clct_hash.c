@@ -1,32 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clct_log.c                                         :+:      :+:    :+:   */
+/*   clct_hash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/05 13:26:35 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/13 14:20:36 by tmckinno         ###   ########.fr       */
+/*   Created: 2017/08/10 14:52:49 by tmckinno          #+#    #+#             */
+/*   Updated: 2017/08/13 13:26:45 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "clct.h"
-#include "libft.h"
+#include "fdict.h"
 
-int	logger(void *key, void *value)
+t_ulong	hash_ptr(void *value)
 {
-	t_region	*region;
-	void		*trash;
+	t_ulong	hash;
 
-	trash = key;
-	region = (t_region*)value;
-	return (1);
+	hash = (t_ulong)value;
+	return (hash);
 }
 
-int	region_log(t_dict regions)
+t_ulong	hash_str(void *value)
 {
-	t_dict	tmp;
+	t_ulong	hash;
+	char	*pos;
 
-	tmp = regions;
-	return (1);
+	hash = 0;
+	pos = (char*)value;
+	while (*pos)
+	{
+		hash *= 97 * (unsigned char)(*pos);
+		pos++;
+	}
+	return (hash);
+}
+
+t_ulong	hash_int(void *value)
+{
+	int		key;
+	t_ulong	hash;
+
+	key = *(int*)value;
+	hash = (t_ulong)key;
+	return (hash);
 }

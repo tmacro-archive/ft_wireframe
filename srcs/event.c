@@ -6,12 +6,11 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 12:50:39 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 19:11:31 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:35:44 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	handle_pan(t_params *params, int x, int y)
 {
@@ -20,9 +19,8 @@ void	handle_pan(t_params *params, int x, int y)
 	draw(params);
 }
 
-int	key_hook(int keycode, t_params *params)
+int		key_hook(int keycode, t_params *params)
 {
-	printf("got keycode %i\n", keycode);
 	if (keycode == K_ESC)
 		handle_esc(params);
 	if (keycode == K_PLUS)
@@ -37,21 +35,19 @@ int	key_hook(int keycode, t_params *params)
 		handle_pan(params, 1, 0);
 	if (keycode == K_RIGHT)
 		handle_pan(params, -1, 0);
+	REF_SWP;
+	return (0);
+}
 
+int		expose_hook(t_params *params)
+{
+	draw(params);
+	REF_SWP;
 	return (0);
 }
 
 void	setup_hooks(t_params *params)
 {
 	mlx_key_hook(params->display->window, &key_hook, params);
+	mlx_expose_hook(params->display->window, &expose_hook, params);
 }
-
-/*
-esc 53
-up 126
-down 125
-left 123
-right 124
-plus 69
-minus 78
-*/

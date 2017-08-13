@@ -6,40 +6,40 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 15:14:19 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 19:01:09 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:23:29 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "clct.h"
-#include <stdio.h>
 
-int		region_manip(void *addr, int mode, size_t len)
+int	region_manip(void *addr, int mode, size_t len)
 {
-	static t_region **regions;
+	static t_dict regions;
 
 	if (!regions)
-	{
-		regions = (t_region**)malloc(sizeof(t_region*));
-		*regions = NULL;
-	}
-	if (mode == 1)
+		regions = VDICT;
+	if (mode == RM_ALLC)
 		return (region_add(regions, addr, len));
-	if (mode == 2)
-		region_iter(regions, addr, &region_rem);
-	if (mode == 3)
-		region_iter(regions, addr, &ref_inc);
-	if (mode == 4)
-		region_iter(regions, addr, &ref_dec);
-	if (mode == 5)
-		region_iter(regions, NULL, &region_log);
-	if (mode == 6)
-		region_iter(regions, NULL, &ref_sweep);
+	if (mode == RM_FREE)
+		return (region_rem(regions, addr));
+	if (mode == RM_RINC)
+		return (ref_inc(regions, addr));
+	if (mode == RM_RDEC)
+		return (ref_dec(regions, addr));
+	if (mode == RM_RSWP)
+		return (ref_sweep(regions));
 	if (mode == RM_RCLN)
-		region_iter(regions, NULL, &ref_clean);
-	return (1);
+	{
+		ref_clean(regions);
+		dict_destroy(regions);
+		regions = NULL;
+	}
+	if (mode == RM_RLOG)
+		return (region_log(regions));
+	return (-1);
 }
 
-int		region_add(t_region **regions, void *addr, size_t len)
+int	region_add(t_dict regions, void *addr, size_t len)
 {
 	t_region *new;
 
@@ -49,67 +49,19 @@ int		region_add(t_region **regions, void *addr, size_t len)
 	new->address = addr;
 	new->size = len;
 	new->ref_count = 0;
-	new->next = *regions;
-	*regions = new;
+	DSET(regions, addr, new);
 	return (1);
 }
 
-int		region_rem(t_region **region)
+int	region_rem(t_dict regions, void *addr)
 {
-	void *tmp;
-
-	if (region && *region)
-	{
-		tmp = (*region)->next;
-		free(*region);
-		*region = tmp;
-		return (1);
-	}
-	return (0);
-}
-/*
-void	region_iter(t_region **regions, void *addr, int (*f)(t_region **r))
-{	
 	t_region	*tmp;
 
-	if (regions && *regions)
+	tmp = DGET(regions, addr);
+	if (tmp)
 	{
-		if ((*regions)->address == addr)
-			f(regions);
-		else
-		{
-			tmp = (*regions)->next;
-			if (addr == NULL)
-				f(regions);
-			if (tmp != *regions)
-				region_iter(&(*regions)->next, addr, f);
-			else
-				region_iter(regions, addr, f);
-		}
+		DREM(regions, addr);
+		free(tmp);
 	}
-}
-*/
-void	region_iter(t_region **regions, void *addr, int (*f)(t_region **r))
-{
-	t_region	**current;
-	t_region	*next;
-
-	current = regions;
-	while (*current)
-	{
-		next = (*current)->next;
-//		printf("-----\niter 1 %p == %p -> %p\n", current, addr, next);
-		if ((*current)->address == addr && addr != NULL)
-		{
-			f(current);
-			break ;
-		}
-		if (addr == NULL)
-			f(current);
-		if (next != *current)
-			*current = (*current)->next;
-		else
-			*current = next;
-//		printf("iter 2 %p == %p -> %p\n-----\n", current, addr, next);
-	}
+	return (0);
 }

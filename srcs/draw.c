@@ -6,12 +6,11 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/23 12:57:55 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 19:10:04 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:31:27 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	render_line(t_display *display, t_line *line, int color)
 {
@@ -64,17 +63,18 @@ void	draw_line(t_display *display, t_tuple *s, t_tuple *e, int color)
 void	render_segments(t_display *display, t_segment *segment, t_tuple *offset)
 {
 	NULL_GUARD_NR(segment);
-//	printf("drawing line: %i, %i -> %i, %i color: %i\n", segment->start->x, segment->start->y, segment->end->x, segment->end->y, segment->color);
-	draw_line(display, offset_point(segment->start, offset), offset_point(segment->end, offset), segment->color);
+	draw_line(display, offset_point(segment->start, offset),
+			offset_point(segment->end, offset), segment->color);
 	render_segments(display, segment->next, offset);
 }
 
 void	draw_map(t_display *display, t_map *map)
 {
-		t_segment	*segments;
-		t_tuple		*offset;
+	t_segment	*segments;
+	t_tuple		*offset;
 
-		offset = new_tuple(display->width / 2 + map->offset_x * 10, display->height / 2 + map->offset_y * 10);
-		segments = build_segments(map);
-		render_segments(display, segments, offset);
+	offset = new_tuple(display->width / 2 + map->offset_x * 10,
+			display->height / 2 + map->offset_y * 10);
+	segments = build_segments(map);
+	render_segments(display, segments, offset);
 }

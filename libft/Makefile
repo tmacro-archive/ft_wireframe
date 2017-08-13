@@ -6,7 +6,7 @@
 #    By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/23 11:38:53 by tmckinno          #+#    #+#              #
-#    Updated: 2017/08/06 23:01:33 by tmckinno         ###   ########.fr        #
+#    Updated: 2017/08/13 14:19:06 by tmckinno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= libft.a
 
 ECHO	= @echo
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -g
+CFLAGS	= -Wall -Werror -Wextra
 SRCDIR	= srcs
 OBJDIR	= build
 INCLUDE	= -I includes
@@ -22,6 +22,9 @@ SRC		= clct_log.c \
 			clct_mem.c \
 			clct_ref.c \
 			clct_region.c \
+			clct_hash.c \
+			clct_manip.c \
+			clct_create.c \
 			ft_atoi.c \
 			ft_bzero.c \
 			ft_ctrim.c \

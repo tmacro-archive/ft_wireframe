@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 14:20:34 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 14:54:30 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/08 12:55:32 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct			s_params
 	t_map				*map;
 }						t_params;
 
-void					draw_line(t_display *display, t_tuple *start, t_tuple *end, int color);
+void					draw_line(t_display *d, t_tuple *s, t_tuple *e, int c);
 t_tuple					*new_tuple(int x, int y);
 int						arr_len(char **arr);
 void					*create_window(int x, int y);
@@ -101,7 +101,7 @@ void					push_segment(t_segment **segs, t_segment *new);
 t_segment				*build_segments(t_map *map);
 t_tuple					*project_point(t_map *map, t_tuple *p);
 t_segment				*new_segment(t_tuple *start, t_tuple *end, int color);
-void					render_segments(t_display *display, t_segment *segment, t_tuple *offset);
+void					render_segments(t_display *d, t_segment *s, t_tuple *o);
 int						gen_color(int z);
 void					mult_matrix(int point[4], float proj[16], int res[4]);
 int						*build_point(int x, int y, int z, int scale);
@@ -112,4 +112,4 @@ void					handle_esc(t_params *params);
 void					handle_zoom(t_params *params, int dir);
 void					draw(t_params *params);
 t_tuple					*offset_point(t_tuple *p, t_tuple *offset);
-# endif
+#endif

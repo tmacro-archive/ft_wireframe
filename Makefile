@@ -6,7 +6,7 @@
 #    By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/23 11:38:53 by tmckinno          #+#    #+#              #
-#    Updated: 2017/08/07 16:02:12 by tmckinno         ###   ########.fr        #
+#    Updated: 2017/08/13 14:18:50 by tmckinno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= fdf
 
 ECHO	= @echo
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -g
+CFLAGS	= -Wall -Werror -Wextra 
 INCLUDE	= -I minilibx -I libft/includes -I includes
 SRCDIR	= srcs
 OBJDIR	= build

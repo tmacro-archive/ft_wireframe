@@ -6,54 +6,75 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 11:02:05 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 16:00:43 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:27:02 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "clct.h"
-#include "libft.h"
-#include <stdio.h>
 
-int	ref_inc(t_region **region)
+int	ref_inc(t_dict regions, void *key)
 {
-	return (++((*region)->ref_count));
+	t_region	*tmp;
+
+	tmp = DGET(regions, key);
+	if (tmp)
+		return (++(tmp->ref_count));
+	return (-1);
 }
 
-int	ref_dec(t_region **region)
+int	ref_dec(t_dict regions, void *key)
 {
-	if ((*region)->ref_count > 0)
-		return (--((*region)->ref_count));
+	t_region	*tmp;
+
+	tmp = DGET(regions, key);
+	if (tmp)
+		if (tmp->ref_count > 0)
+			return (--(tmp->ref_count));
 	return (0);
 }
 
-int	ref_sweep(t_region **region)
+int	ref_sweep(t_dict regions)
 {
-	void *tmp;
+	size_t		i;
+	t_fdict_el	**prev;
+	t_fdict_el	*e;
+	t_region	*tmp;
 
-	printf("sweep: %p, %p\n", region, *region);
-	if ((*region)->ref_count <= 0)
+	i = 0;
+	while (i < regions->size)
 	{
-		tmp = (*region)->next;
-		free((*region)->address);
-		free(*region);
-		*region = tmp;
-		return (1);
+		prev = &(regions->buckets[i++]);
+		while (*prev)
+		{
+			tmp = (t_region*)(*prev)->value;
+			if (tmp->ref_count <= 0)
+			{
+				e = *prev;
+				*prev = e->next;
+				free(tmp->address);
+				free(tmp);
+				free(e);
+				continue ;
+			}
+			prev = &((*prev)->next);
+		}
 	}
-	return (0);
-}
-
-int	ref_clean(t_region **region)
-{
-	t_region *tmp;
-	t_region *f;
-	
-	tmp = (*region)->next;
-	printf("clean: %p, %p\n", (*region)->next, (*region)->address);
-	f = (*region)->address;
-	free(f);
-	printf("clean: %p\n", f);
-	free(*region);
-	*region = tmp;
 	return (1);
 }
 
+int	cleaner(void *key, void *value)
+{
+	t_region	*tmp;
+	void		*nil;
+
+	nil = key;
+	tmp = (t_region*)value;
+	free(tmp->address);
+	return (1);
+}
+
+int	ref_clean(t_dict regions)
+{
+	dict_iter(regions, &cleaner);
+	return (1);
+}
