@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 11:02:05 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/13 13:27:02 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/14 14:20:23 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	cleaner(void *key, void *value)
 	nil = key;
 	tmp = (t_region*)value;
 	free(tmp->address);
+	free(tmp);
 	return (1);
 }
 

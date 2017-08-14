@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 16:50:43 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/07 11:34:54 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/14 14:22:06 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,12 @@ void	buf_copy(char **dest, char *src, size_t len)
 	char *trunc;
 
 	if (!**dest)
-	{
-		ft_memdel((void**)dest);
 		*dest = ft_strncpy(ft_strnew(len), src, len);
-	}
 	else
 	{
 		trunc = ft_strsub(src, 0, len);
 		tmp = *dest;
 		*dest = ft_strjoin(*dest, trunc);
-		ft_strdel(&trunc);
-		ft_strdel(&tmp);
 	}
 }
 
@@ -50,7 +45,7 @@ void	load_fd(const int fd, char **buf, char **obs_fd)
 	if ((obs_fd[fd]))
 	{
 		ft_strcpy(*buf, obs_fd[fd]);
-		ft_strdel(&obs_fd[fd]);
+		obs_fd[fd] = 0;
 	}
 }
 
@@ -72,13 +67,13 @@ int		get_next_line(const int fd, char **line)
 	ERR_CNR(line, NULL, -1);
 	*line = ft_strnew(0);
 	load_fd(fd, &buf, obs_fd);
-	ERR_CNRF((parse_line(fd, &buf, line, obs_fd)), 1, 1, buf);
+	ERR_CNR((parse_line(fd, &buf, line, obs_fd)), 1, 1);
 	while ((bytes_read = read(fd, buf, BUFF_SIZE)) > -2)
 	{
-		ERR_CNRF(bytes_read, -1, -1, buf);
+		ERR_CNR(bytes_read, -1, -1);
 		BREAK(bytes_read, 0);
-		ERR_CNRF(parse_line(fd, &buf, line, obs_fd), 1, 1, buf);
+		ERR_CNR(parse_line(fd, &buf, line, obs_fd), 1, 1);
 	}
-	ERR_CNRF(**line, 0, 0, buf);
+	ERR_CNR(**line, 0, 0);
 	return (1);
 }
