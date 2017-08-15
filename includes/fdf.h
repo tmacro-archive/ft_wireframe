@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 14:20:34 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/08 12:55:32 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/15 10:18:54 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,7 @@ void					handle_esc(t_params *params);
 void					handle_zoom(t_params *params, int dir);
 void					draw(t_params *params);
 t_tuple					*offset_point(t_tuple *p, t_tuple *offset);
+void					*map_width_error(int exp, int obs, int line);
+void					*invalid_row_error();
+void					*empty_or_invalid_error();
 #endif

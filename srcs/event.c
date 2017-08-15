@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 12:50:39 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/13 13:35:44 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/15 10:08:41 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int		expose_hook(t_params *params)
 
 void	setup_hooks(t_params *params)
 {
+	mlx_do_key_autorepeaton(params->display->display);
 	mlx_key_hook(params->display->window, &key_hook, params);
 	mlx_expose_hook(params->display->window, &expose_hook, params);
 }
+
+
+

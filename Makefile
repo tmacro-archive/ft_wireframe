@@ -6,7 +6,7 @@
 #    By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/23 11:38:53 by tmckinno          #+#    #+#              #
-#    Updated: 2017/08/13 14:18:50 by tmckinno         ###   ########.fr        #
+#    Updated: 2017/08/15 10:11:01 by tmckinno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC		= draw.c \
 		  color.c \
 		  math.c \
 		  event.c \
-		  keys.c
+		  keys.c \
+		  errors.c
 
 SRCS	= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ		= $(SRC:%.c=$(OBJDIR)/%.o)

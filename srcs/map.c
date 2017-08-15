@@ -6,7 +6,7 @@
 /*   By: tmckinno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 21:11:45 by tmckinno          #+#    #+#             */
-/*   Updated: 2017/08/13 14:35:19 by tmckinno         ###   ########.fr       */
+/*   Updated: 2017/08/15 10:17:15 by tmckinno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int		*parse_row(char *line)
 	char	**split;
 
 	split = ft_strsplit(line, ' ');
+	/*
 	while (*line)
 	{
 		if (!(ft_isdigit(*line) || *line == ' '))
 			return (NULL);
 		line++;
 	}
+	*/
 	len = arr_len(split);
 	ERR_CNRF((row = (int*)ft_memalloc(len * sizeof(int))), NULL, NULL, split);
 	pos = row;
@@ -90,10 +92,10 @@ t_map	*load_map(char *file)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (map->width != -1 && map->width != map_width(line))
-			return (NULL);
+			return (map_width_error(map->width, map_width(line), map->height));
 		(map->width == -1) ? (map->width = map_width(line)) : (1);
 		if (!extend_map(map->map, parse_row(line), map->height++))
-			return (NULL);
+			return (invalid_row_error());
 	}
 	close(fd);
 	map->offset_x = 0;
